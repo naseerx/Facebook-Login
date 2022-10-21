@@ -1,6 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+
+import 'ads/ads.dart';
+import 'home.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,7 +23,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(),
+      home: const HomeScreen(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -35,32 +41,31 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   bool _isLoggedIn = false;
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('fb'),
       ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () async {
-            FacebookAuth.instance.login(
-                permissions: ["public_profile", "email"]).then((value) async {
-              setState(() {
-                _isLoggedIn = true;
-              });
-              final LoginResult result = await FacebookAuth.instance.login();
-              if (result.status == LoginStatus.success) {
-                print('facebook login successfully ');
-                final AccessToken accessToken = result.accessToken!;
-                final userData = await FacebookAuth.i.getUserData();
-                print('Your fb name : ${userData['name']}');
-                print('Your fb email : ${userData['email']}');
-              }
+      body: ElevatedButton(
+        onPressed: () async {
+          FacebookAuth.instance.login(
+              permissions: ["public_profile", "email"]).then((value) async {
+            setState(() {
+              _isLoggedIn = true;
             });
-          },
-          child: const Text('Login with Fb'),
-        ),
+            final LoginResult result = await FacebookAuth.instance.login();
+            if (result.status == LoginStatus.success) {
+              print('facebook login successfully ');
+              final AccessToken accessToken = result.accessToken!;
+              final userData = await FacebookAuth.i.getUserData();
+              print('Your fb name : ${userData['name']}');
+              print('Your fb email : ${userData['email']}');
+            }
+          });
+        },
+        child: const Text('Login with Fb'),
       ),
     );
   }

@@ -18,8 +18,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('TabBar Widget'),
-          bottom: TabBar(
-            tabs: const [
+          bottom: const TabBar(
+            tabs: [
               Tab(
                 icon: Icon(Icons.cloud_outlined),
               ),
@@ -41,14 +41,14 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   leading: CircleAvatar(),
                   title: Text('Ali'),
                   trailing: Icon(Icons.add),
-                  subtitle: Text('arah hoo'),
+                  subtitle: Text('array hoo'),
                 )
               ],
             ),
-            Center(
+            const Center(
               child: Text("It's rainy here"),
             ),
-            Center(
+            const Center(
               child: Text("It's sunny here"),
             ),
           ],
