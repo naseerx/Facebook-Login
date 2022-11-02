@@ -1,10 +1,9 @@
+import 'package:fb/fb_details.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 
-import 'ads/ads.dart';
 import 'home.dart';
 
 void main() {
@@ -41,31 +40,72 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   bool _isLoggedIn = false;
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('fb'),
+        title: const Text('fb login'),
+        centerTitle: true,
+        toolbarHeight: 80,
+        backgroundColor: Colors.deepPurple,
       ),
-      body: ElevatedButton(
-        onPressed: () async {
-          FacebookAuth.instance.login(
-              permissions: ["public_profile", "email"]).then((value) async {
-            setState(() {
-              _isLoggedIn = true;
+      body: Center(
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(primary: Colors.deepPurple),
+          onPressed: () async {
+            FacebookAuth.instance.login(
+                permissions: ["public_profile", "email"]).then((value) async {
+              setState(() {
+                _isLoggedIn = true;
+              });
+              final LoginResult result = await FacebookAuth.instance.login();
+              if (result.status == LoginStatus.success) {
+                final AccessToken accessToken = result.accessToken!;
+
+                // There are two methods of getting user data from fb login
+
+                // First method
+                // *****************************************************
+
+                // var graphResponse = await http.get(Uri.parse(
+                //   'https://graph.facebook.com/v2.12/me?fields=picture&access_token=${accessToken.token}',
+                // ));
+                //
+                // var profile = json.decode(graphResponse.body);
+                // // if (kDebugMode) {
+                // //   print(profile.toString());
+                // //   print(
+                // //     profile['picture']['data']['url'],
+                // //   );
+                // //   print('facebook login successfully ');
+                // // }
+                // String image = profile['picture']['data']['url'];
+
+                // *****************************************************
+
+                // 2nd Method and i am using 2nd one
+                // *****************************************************
+                final userData = await FacebookAuth.i.getUserData();
+                if (kDebugMode) {
+                  print('Your fb name : ${userData['name']}');
+                  print('Your fb email : ${userData['email']}');
+                  print(
+                      'Your fb photo : ${userData['picture']['data']['url']}');
+                }
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => FbDetails(
+                          email: '${userData['email']}',
+                          name: '${userData['name']}',
+                          photo: '${userData['picture']['data']['url']}',
+                        )));
+              }
             });
-            final LoginResult result = await FacebookAuth.instance.login();
-            if (result.status == LoginStatus.success) {
-              print('facebook login successfully ');
-              final AccessToken accessToken = result.accessToken!;
-              final userData = await FacebookAuth.i.getUserData();
-              print('Your fb name : ${userData['name']}');
-              print('Your fb email : ${userData['email']}');
-            }
-          });
-        },
-        child: const Text('Login with Fb'),
+          },
+          child: const Text(
+            'Login with Fb',
+            style: TextStyle(fontSize: 20),
+          ),
+        ),
       ),
     );
   }
