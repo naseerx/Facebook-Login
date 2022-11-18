@@ -39,6 +39,7 @@ dependencies:
   flutter_facebook_auth: ^4.3.4+2
   http: ^0.13.4
   google_mobile_ads:
+  rename:
 
 dev_dependencies:
   flutter_test:

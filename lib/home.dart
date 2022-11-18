@@ -4,6 +4,7 @@ import 'package:fb/ads/rewarded.dart';
 import 'package:fb/get_api.dart';
 import 'package:fb/main.dart';
 import 'package:fb/screen.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
@@ -36,7 +37,9 @@ class _HomeScreenState extends State<HomeScreen> {
           });
         },
         onAdFailedToLoad: (err) {
-          print('Failed to load an interstitial ad: ${err.message}');
+          if (kDebugMode) {
+            print('Failed to load an interstitial ad: ${err.message}');
+          }
         },
       ),
     );

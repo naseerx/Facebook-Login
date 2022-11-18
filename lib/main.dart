@@ -44,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('fb login'),
+        title: const Text('facebook Login'),
         centerTitle: true,
         toolbarHeight: 80,
         backgroundColor: Colors.deepPurple,
