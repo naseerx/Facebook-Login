@@ -1,14 +1,11 @@
 import 'package:fb/ads/banner_ad.dart';
-import 'package:fb/ads/nterstitial.dart';
-import 'package:fb/ads/rewarded.dart';
-import 'package:fb/get_api.dart';
-import 'package:fb/main.dart';
 import 'package:fb/screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import 'ads/ads.dart';
+import 'get_api.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -27,9 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (ad) {
           ad.fullScreenContentCallback = FullScreenContentCallback(
-            onAdDismissedFullScreenContent: (ad) {
-              Navigator.pop(context);
-            },
+            onAdDismissedFullScreenContent: (ad) {},
           );
 
           setState(() {
@@ -44,10 +39,17 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
   @override
   void dispose() {
     _interstitialAd?.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadInterstitialAd();
   }
 
   @override
@@ -57,57 +59,83 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text('HOME SCREEN'),
         centerTitle: true,
         toolbarHeight: 80,
+        backgroundColor: Colors.deepPurple,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const MyHomePage()));
-                },
-                child: const Text('FACEBOOK LOGIN')),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const MaazApi()));
-                },
-                child: const Text('MAAZ API')),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const MyStatefulWidget()));
-                },
-                child: const Text('TABBAR')),
-            ElevatedButton(
-                onPressed: () {
+      body: SizedBox(
+        height: 400,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => const MaazApi()));
+                  },
+                  child: const Text('MAAZ API')),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const MyStatefulWidget()));
+                  },
+                  child: const Text('TABBAR')),
+              MyButton(
+                onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => const BannerAdd()));
                 },
-                child: const Text('BANNER ADS')),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const InterstitialAdScreen()));
+                name: 'banner add',
+              ),
+              MyButton(
+                onTap: () {
+                  _interstitialAd?.show();
                 },
-                child: const Text('interstitial ADS')),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const BannerAdd()));
-                },
-                child: const Text('BANNER ADS')),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const RewardedAdScreen()));
-                },
-                child: const Text('REWARDED ADS')),
-          ],
+                name: 'interstitial ADS',
+              ),
+              // MyButton(
+              //   onTap: () {
+              //     Navigator.of(context).push(MaterialPageRoute(
+              //         builder: (context) => const BannerAdd()));
+              //   },
+              //   name: 'BANNER ADS',
+              // ),
+              // MyButton(
+              //   onTap: () {
+              //     Navigator.of(context).push(MaterialPageRoute(
+              //         builder: (context) => const RewardedAdScreen()));
+              //   },
+              //   name: 'REWARDED ADS',
+              // ),
+            ],
+          ),
         ),
       ),
     );
+  }
+}
+
+class MyButton extends StatelessWidget {
+  final String name;
+  final VoidCallback onTap;
+
+  const MyButton({
+    Key? key,
+    required this.name,
+    required this.onTap,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: Colors.purple,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          minimumSize: Size(MediaQuery.of(context).size.width * 0.5, 50),
+        ),
+        onPressed: onTap,
+        child: Text(name));
   }
 }

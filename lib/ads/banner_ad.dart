@@ -52,8 +52,12 @@ class _BannerAddState extends State<BannerAdd> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.teal[100],
       appBar: AppBar(
-        title: const Text('Banner Ads'),
+        title: const Text('BANNER ADD'),
+        centerTitle: true,
+        toolbarHeight: 80,
+        backgroundColor: Colors.deepPurple,
       ),
       body: Center(
         child: _bannerAd != null
@@ -62,7 +66,7 @@ class _BannerAddState extends State<BannerAdd> {
                 height: _bannerAd!.size.height.toDouble(),
                 child: AdWidget(ad: _bannerAd!),
               )
-            : const Text('Ads Hree'), // ElevatedButton(
+            : const Text('Ads Here'), // ElevatedButton(
         //   onPressed: () async {
         //     FacebookAuth.instance.login(
         //         permissions: ["public_profile", "email"]).then((value) async {

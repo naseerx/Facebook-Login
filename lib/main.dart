@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const HomeScreen(),
+      home: const MyHomePage(),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -48,6 +48,14 @@ class _MyHomePageState extends State<MyHomePage> {
         centerTitle: true,
         toolbarHeight: 80,
         backgroundColor: Colors.deepPurple,
+        actions: [
+          TextButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const HomeScreen()));
+              },
+              child: const Text('NEXT'))
+        ],
       ),
       body: Center(
         child: ElevatedButton(
