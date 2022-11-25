@@ -74,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) => const MaazApi()));
                   },
-                  child: const Text('MAAZ API')),
+                  child: const Text('MAAZ KHAN API')),
               ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).push(
