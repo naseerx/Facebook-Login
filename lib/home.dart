@@ -1,8 +1,13 @@
 import 'package:fb/ads/banner_ad.dart';
+import 'package:fb/provider/counter.dart';
+import 'package:fb/provider/homeScreen.dart';
 import 'package:fb/screen.dart';
+import 'package:fb/who_api_home.dart';
+import 'package:fb/who_is_who.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:provider/provider.dart';
 
 import 'ads/ads.dart';
 import 'get_api.dart';
@@ -71,14 +76,14 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => const MaazApi()));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const MaazApi()));
                   },
                   child: const Text('MAAZ KHAN API')),
               ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => const LoginScreen()));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const LoginScreen()));
                   },
                   child: const Text('LoginScreen')),
               ElevatedButton(
@@ -100,20 +105,28 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
                 name: 'interstitial ADS',
               ),
-              // MyButton(
-              //   onTap: () {
-              //     Navigator.of(context).push(MaterialPageRoute(
-              //         builder: (context) => const BannerAdd()));
-              //   },
-              //   name: 'BANNER ADS',
-              // ),
-              // MyButton(
-              //   onTap: () {
-              //     Navigator.of(context).push(MaterialPageRoute(
-              //         builder: (context) => const RewardedAdScreen()));
-              //   },
-              //   name: 'REWARDED ADS',
-              // ),
+              MyButton(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const HomeScreenListener()));
+                },
+                name: 'country List',
+              ),
+              MyButton(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const WhoApiHomeScreen()));
+                },
+                name: 'cWho api Sudais',
+              ),
+              MyButton(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const WhoIsWho()));
+                },
+                name: 'Provider',
+              ),
+
             ],
           ),
         ),

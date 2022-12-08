@@ -49,6 +49,7 @@ dependencies:
   conditional_builder:
   fluttertoast:
   carousel_slider:
+  provider:
 
 dev_dependencies:
   flutter_test:
@@ -61,6 +62,7 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^1.0.0
   rive:
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
