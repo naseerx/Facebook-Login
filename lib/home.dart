@@ -1,17 +1,15 @@
 import 'package:fb/ads/banner_ad.dart';
-import 'package:fb/provider/counter.dart';
 import 'package:fb/provider/homeScreen.dart';
 import 'package:fb/screen.dart';
+import 'package:fb/ui.dart';
 import 'package:fb/who_api_home.dart';
 import 'package:fb/who_is_who.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:provider/provider.dart';
 
 import 'ads/ads.dart';
 import 'get_api.dart';
-import 'login/login.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -68,7 +66,6 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.deepPurple,
       ),
       body: SizedBox(
-        height: 400,
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -80,12 +77,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         builder: (context) => const MaazApi()));
                   },
                   child: const Text('MAAZ KHAN API')),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const LoginScreen()));
-                  },
-                  child: const Text('LoginScreen')),
               ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
@@ -126,7 +117,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
                 name: 'Provider',
               ),
-
+              MyButton(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const JamalApi()));
+                },
+                name: 'Charts',
+              ),
             ],
           ),
         ),

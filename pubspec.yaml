@@ -40,7 +40,6 @@ dependencies:
   http: ^0.13.4
   google_mobile_ads:
   rename:
-  hexcolor:
   smooth_page_indicator:
   bloc:
   flutter_bloc:
@@ -50,6 +49,7 @@ dependencies:
   fluttertoast:
   carousel_slider:
   provider:
+
 
 dev_dependencies:
   flutter_test:
@@ -61,7 +61,6 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^1.0.0
-  rive:
 
 
 # For information on the generic Dart part of this file, see the

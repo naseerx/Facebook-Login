@@ -25,6 +25,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => CounterClass()),
         ChangeNotifierProvider(create: (context) => CounterClassApi()),
         ChangeNotifierProvider(create: (context) => WhoApiProvider()),
+        ChangeNotifierProvider(create: (context) => DictionaryApiProvider()),
+        ChangeNotifierProvider(create: (context) => JamalApiProvider()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
