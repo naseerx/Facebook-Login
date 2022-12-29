@@ -1,6 +1,6 @@
-# fb
+# Facebook Login
 
-A new Flutter project.
+A repository base on how to implement Facebook login in flutter 
 
 ## Getting Started
 
