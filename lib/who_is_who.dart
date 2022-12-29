@@ -39,7 +39,7 @@ class _WhoIsWhoState extends State<WhoIsWho> {
 
   getAllEmployee() async {
     streamController.add('loading');
-    var api = "https://hqsupplys.com/public/api/employee";
+    var api = "";
     var response = await http.get(Uri.parse(api), headers: {
       'Accept': "application/json",
       'Content-Type': "application/json",

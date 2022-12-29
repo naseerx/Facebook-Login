@@ -31,7 +31,7 @@ class CounterClassApi extends ChangeNotifier {
 
   getAllCountry() async {
     streamController.add('loading');
-    var url = 'https://restcountries.com/v2/all';
+    var url = '';
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var jsonData = json.decode(response.body);
@@ -59,7 +59,7 @@ class DictionaryApiProvider extends ChangeNotifier {
 
   getAllCountry() async {
     streamController.add('loading');
-    var url = 'https://api.dictionaryapi.dev/api/v2/entries/en/media';
+    var url = '';
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var jsonData = json.decode(response.body);
@@ -89,7 +89,7 @@ class JamalApiProvider extends ChangeNotifier {
     try {
       streamController.add('loading');
       String endPointUrl =
-          'https://www.timeapi.io/api/Time/current/zone?timeZone=Europe/Amsterdam';
+          '';
       var request = await http.get(
         Uri.parse(endPointUrl),
       );

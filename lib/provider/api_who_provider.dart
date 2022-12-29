@@ -46,7 +46,7 @@ class WhoApiProvider extends ChangeNotifier{
       'ohhEaIfyUzDvi9XngTkD_MkFcqswUzrND_j8rLCgkBgsCdNER8xc';
   getAllCountry() async {
     streamController.add('loading');
-    var url = 'https://restcountries.com/v2/all';
+    var url = '';
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var jsonData = json.decode(response.body);
@@ -62,7 +62,7 @@ class WhoApiProvider extends ChangeNotifier{
   }
   getAllEmployee() async {
     streamController.add('loading');
-    var api = "https://hqsupplys.com/public/api/employee";
+    var api = "";
     var response = await http.get(Uri.parse(api), headers: {
       'Accept': "application/json",
       'Content-Type': "application/json",
