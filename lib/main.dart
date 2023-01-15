@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const MyHomePage(),
+        home: const GetApiJamal(),
         debugShowCheckedModeBanner: false,
       ),
     );
@@ -51,7 +51,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  bool _isLoggedIn = false;
+  bool isLoggedIn = false;
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
             FacebookAuth.instance.login(
                 permissions: ["public_profile", "email"]).then((value) async {
               setState(() {
-                _isLoggedIn = true;
+                isLoggedIn = true;
               });
               final LoginResult result = await FacebookAuth.instance.login();
               if (result.status == LoginStatus.success) {
