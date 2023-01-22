@@ -53,7 +53,6 @@ class _MaazApiState extends State<MaazApi> {
                         'Sponsor Information',
                         style: TextStyle(
                             fontSize: 20,
-                            fontFamily: 'Raleway',
                             fontWeight: FontWeight.w700),
                       ),
                       const SizedBox(
