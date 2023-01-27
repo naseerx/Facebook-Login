@@ -1,14 +1,7 @@
-import 'package:fb/fb_details.dart';
-import 'package:fb/provider/api_who_provider.dart';
-import 'package:fb/provider/counter.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:provider/provider.dart';
-
-import 'api.dart';
-import 'home.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,22 +14,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => CounterClass()),
-        ChangeNotifierProvider(create: (context) => CounterClassApi()),
-        ChangeNotifierProvider(create: (context) => WhoApiProvider()),
-        ChangeNotifierProvider(create: (context) => DictionaryApiProvider()),
-        ChangeNotifierProvider(create: (context) => JamalApiProvider()),
-      ],
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: const GetApiJamal(),
-        debugShowCheckedModeBanner: false,
+    return MaterialApp(
+      title: 'Facebook Login',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
       ),
+      home: const MyHomePage(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -61,18 +45,10 @@ class _MyHomePageState extends State<MyHomePage> {
         centerTitle: true,
         toolbarHeight: 80,
         backgroundColor: Colors.deepPurple,
-        actions: [
-          TextButton(
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const HomeScreen()));
-              },
-              child: const Text('NEXT'))
-        ],
       ),
       body: Center(
         child: ElevatedButton(
-          style: ElevatedButton.styleFrom(primary: Colors.deepPurple),
+          style: ElevatedButton.styleFrom(backgroundColor: Colors.deepPurple),
           onPressed: () async {
             FacebookAuth.instance.login(
                 permissions: ["public_profile", "email"]).then((value) async {
@@ -81,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
               });
               final LoginResult result = await FacebookAuth.instance.login();
               if (result.status == LoginStatus.success) {
-                final AccessToken accessToken = result.accessToken!;
+                // final AccessToken accessToken = result.accessToken!;
 
                 // There are two methods of getting user data from fb login
 
@@ -137,16 +113,89 @@ class _MyHomePageState extends State<MyHomePage> {
       // by default we request the email and the public profile
 
       if (result.status == LoginStatus.success) {
-        print('login ');
+        if (kDebugMode) {
+          print('login ');
+        }
 
-        final AccessToken accessToken = result.accessToken!;
+        // final AccessToken accessToken = result.accessToken!;
 
         final userData = await FacebookAuth.i.getUserData();
-        print(userData['name']);
+        if (kDebugMode) {
+          print(userData['name']);
+        }
       }
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
     }
+  }
+}
+
+class FbDetails extends StatefulWidget {
+  final String name;
+  final String email;
+  final String photo;
+
+  const FbDetails({
+    Key? key,
+    required this.email,
+    required this.name,
+    required this.photo,
+  }) : super(key: key);
+
+  @override
+  State<FbDetails> createState() => _FbDetailsState();
+}
+
+class _FbDetailsState extends State<FbDetails> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.name),
+        centerTitle: true,
+        toolbarHeight: 80,
+        backgroundColor: Colors.deepPurple,
+      ),
+      body: Center(
+        child: Column(
+          children: [
+            Container(
+              height: 200.0,
+              width: 200.0,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(color: Colors.black),
+                image: DecorationImage(
+                  fit: BoxFit.fill,
+                  image: NetworkImage(
+                    widget.photo,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            Text(
+              'NAME: ' + widget.name,
+              style: const TextStyle(fontSize: 20),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Text('EMAIL: ' + widget.email,
+                style: const TextStyle(fontSize: 20)),
+            ElevatedButton(
+                onPressed: () {
+                  fbLogout();
+                },
+                child: const Text('Logout')),
+          ],
+        ),
+      ),
+    );
   }
 
   Future<void> fbLogout() async {
